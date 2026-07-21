@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: #F4EFE1; color: #3a3a2c; line-height: 1.65; }
+header { background: radial-gradient(130% 120% at 18% 0%, #54663a 0%, #2f3b23 46%, #1e2716 100%); color: #F4EFE1; padding: 56px 24px 44px; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+header .wrap { padding: 0; max-width: 720px; margin: 0 auto; }
+.logo { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: #E0975A; color: #1e2612; font-family: 'Bricolage Grotesque'; font-weight: 800; font-size: 20px; margin-bottom: 14px; }
+h1 { font-family: 'Bricolage Grotesque'; font-weight: 800; font-size: 38px; letter-spacing: -1px; margin: 0 0 6px; }
+h2 { font-family: 'Bricolage Grotesque'; font-weight: 700; font-size: 22px; letter-spacing: -0.4px; color: #28311c; margin: 34px 0 10px; }
+header p { color: rgba(244,239,225,.75); margin: 0; }
+main { padding: 12px 0 72px; }
+a { color: #c9743e; font-weight: 600; text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul { padding-left: 22px; }
+footer { border-top: 1px solid rgba(0,0,0,.08); padding: 22px 24px 40px; font-size: 13.5px; color: #8a8a6f; text-align: center; }
+.updated { font-size: 13px; color: #8a8a6f; }
