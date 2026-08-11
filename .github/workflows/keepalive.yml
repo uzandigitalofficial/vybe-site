@@ -1,7 +1,8 @@
 name: Supabase keep-alive
 
 # Supabase free-tier pauses a project after ~7 days without activity, which takes
-# the Vybe backend offline (sign-in stops working). A daily read keeps it awake.
+# the Vybe backend offline (sign-in stops working). A daily read keeps it awake
+# and rolls demo events forward so the app never looks stale.
 on:
   schedule:
     - cron: '17 6 * * *'
@@ -13,9 +14,19 @@ jobs:
     steps:
       - name: Ping Supabase REST API
         run: |
-          URL="https://amlztonvpwtiatmomceq.supabase.co/rest/v1/events?select=id&limit=1"
+          BASE="https://amlztonvpwtiatmomceq.supabase.co"
           KEY="${{ secrets.SUPABASE_ANON_KEY }}"
-          CODE=$(curl -s -o /tmp/out.txt -w '%{http_code}' "$URL" -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
-          echo "HTTP $CODE"
+          CODE=$(curl -s -o /tmp/out.txt -w '%{http_code}' \
+            "$BASE/rest/v1/events?select=id&limit=1" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY")
+          echo "read -> HTTP $CODE"
           cat /tmp/out.txt
           test "$CODE" = "200"
+      - name: Roll demo content forward
+        run: |
+          BASE="https://amlztonvpwtiatmomceq.supabase.co"
+          KEY="${{ secrets.SUPABASE_ANON_KEY }}"
+          curl -s -o /dev/null -w 'refresh -> HTTP %{http_code}\n' \
+            -X POST "$BASE/rest/v1/rpc/refresh_seed_content" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
+            -H 'Content-Type: application/json' -d '{}'
