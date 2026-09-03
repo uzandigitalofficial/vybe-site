@@ -32,5 +32,12 @@ jobs:
             -H 'Content-Type: application/json' -d '{}'
       - name: Purge expired story media
         run: |
-          curl -sS -X POST "https://amlztonvpwtiatmomceq.supabase.co/functions/v1/cleanup-stories" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}"
+          CODE=$(curl -sS -o /tmp/purge.txt -w '%{http_code}' \
+            -X POST "https://amlztonvpwtiatmomceq.supabase.co/functions/v1/cleanup-stories" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}")
+          echo "purge -> HTTP $CODE"
+          cat /tmp/purge.txt
+          echo
+          # Fail loudly. A 403 here means SUPABASE_SERVICE_ROLE_KEY is not the
+          # legacy service_role key, and expired story media is silently piling up.
+          test "$CODE" = "200"
