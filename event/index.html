@@ -13,7 +13,7 @@
 <footer>© 2026 Duskaro</footer>
 <script>
   var id = new URLSearchParams(location.search).get('id');
-  var url = 'vybe://event/' + (id || '');
+  var url = 'duskaro://event/' + (id || '');
   document.getElementById('applink').href = url;
   if (id) setTimeout(function () { location.href = url; }, 400);
 </script>
